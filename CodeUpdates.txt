@@ -1,0 +1,85 @@
+******************************V1.1*************************************
+Nov. 15, 2011
+Kristen 
+	- updated input_data file to look for pre-calibrated coefficients (iswitchCal==3)
+	- updated input_data to check if depth is 10m for wave data. If not, function calcH10 calcs new H 
+		based on shoaling. h is then updated in codes.
+	- updated codes so Power is calculated in separate function and uses full eqn with depth
+Nov 16, 2011
+Kristen
+	- updated output file and userData.m to note that c+/c- were backwards in original codes.
+	- updated calcH10 code to allow for wave angles as well (Snell's Law)
+Nov 18, 2011
+Kristen
+	-updated codes to go back to deep water wave conditions so we can also calculate R2
+	-was also unsure if using 10m values was best when waves could be breaking and were not accounting for this.
+Nov 21, 2011
+Kristen
+	-found error in output file to determine b linear trend term. FIXED
+	-found error in calibrate code for subsampling of data. FIXED
+Nov 22, 2011
+Kristen
+	-updated codes (genUserData, input_data, calibrate_data, hindcast_data) to allow for tidal influence on 
+		exposure of shoreline to waves. Code now reads in tide information based on user flag (tideSwitch=y)
+		if they wish to include tidal variation (and R2). 	
+		Current form is binary: When water levels are below MSL, F=0.
+	-updated so that user enters shoreline contour elevation and this is compared to total water level (vs. MSL)
+Mark	
+	-updated codes to remove trend from X, X2 term so that b represents a true linear trend in the data.  
+	Kristen updated calibrate_data and hindcast_data to reflect this change.
+Nov 23, 2011
+Kristen	
+	-updated code to include weighting in the calibration for goodness of fit of the data to the expected shoreline contour.
+******************************V1.2*************************************
+
+******************************V1.2*************************************
+Nov 24, 2011
+Kristen
+	-removing linear trend term optimization as this won't be good for intersite/time  transfer or forecasting
+	 (Calibration specific). Model now solves for b as linear trend in data at each site and optimizes for c+/c-..
+	c+/c- should be the only transferable terms now.. NOte that A = (1:5) = [a b c- c+ a2]
+Dec. 3, 2011
+Kristen
+	-hindcast is now an explicit solution and outputs: 
+		xs(t) = data(1)+int(c+/-(Omega_f-Omega)F*dt)
+		x(t) = xs + linear trend of hindcast data
+Dec. 5, 2011
+Kristen	
+	-hindcast now goes forward and backward from end points.
+	-also editing genUserData.m to remove option of linear trend term and being able to input your own 
+		coefficients given that b is no long an option and we're using an explicit soln.
+Feb 6, 2012
+Kristen
+	-working on adding in the Fortran codes to allow for the Monte Carlo forecasting. Step 1 is complete (HPDPRE_ShoreFor.FOR) 
+	to add in dynamic variable input. Tested on GC data and comparible results. Need to check histograms by month.
+
+
+Feb 27, 2012
+Kristen
+	-added in Mark's updated calibration method. calibrate_model and hindcast_model have been changed.
+FEb 29, 2012
+Kristen
+	-forecasting codes are working externally. Final test is to implement into the model.
+
+June 10, 2012
+Kristen
+ 	-found error in calcP code (assumed rms wave height. Codes updated and saved ShoreForv1_120612.zip
+
+June 20, 2012
+Kristen	
+	-found error in fftfilter code so that mean value (f(1)) is never used. edited code and saved as ShoreForv1_120620.zip
+
+Aug 20, 2012
+Kristen
+	-edited genUserData to include period in search (in case not named 'T'). 
+	-edited calibration code for plot and output stats
+
+*** To do ****
+clean up codes. Remove c choice, remove best fit option (now only explicit solutions), remove option for linear b term, remove DLT10
+
+
+
+*****to do later?*****
+-adding in various levels of filter frequencies to look at storm, seasonal, annual, long term cycles
+
+

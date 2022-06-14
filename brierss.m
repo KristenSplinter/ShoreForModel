@@ -1,0 +1,13 @@
+function [BSS]=brierss(xm,x,xb,dx)
+% Brier Skils Function
+
+% xm - measured data
+% x - model data
+% xb - benchmrk data
+% dx - measurement error
+
+BSS = 1 - ...
+    ( ...
+    mean( ( ( abs(x-xm) - dx ) ).^2) /...
+    mean( (xb-xm).^2) ...
+    );
